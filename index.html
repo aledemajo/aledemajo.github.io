@@ -1,1 +1,486 @@
-testsdasdasdttting hosting
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+<head>
+        <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+
+<div class="container">
+   
+   
+    <div class="side-bar">
+       <div class="side-bar-title">
+           Data Visualization by Alejandro de Majo
+       </div>
+       <div class="side-bar-element">Satelite Orbit Distribution</div>
+<!--
+       <div class="side-bar-element">World Population Statistics</div>
+       <div class="side-bar-element">Some other bullshit</div>
+-->
+    </div>
+   
+     
+    <div class="visual">
+        <svg width="1100" height="730" viewBox="-80 -990 50 2000">
+            <circle id="HEO" class="orbit-type"></circle>
+            <circle id="GSO" class="orbit-type"></circle>
+            <circle id="MEO" class="orbit-type"></circle>
+            <circle id="LEO" class="orbit-type"></circle>
+            
+            <defs>
+                <radialGradient id="GradientEarth" cx="0.5" cy="0.5" r="0.7" fx="0.75" fy="0.75" spreadMethod="pad">
+                        <stop offset="0%" stop-color="#006600"/>
+<!--                        <stop offset="0%" stop-color="#1D9D21"/>-->
+                        <stop offset="100%" stop-color="#000FFF"/>
+                  </radialGradient>
+            </defs>
+            <defs>
+                <radialGradient id="GradientMoon" cx="0.5" cy="0.5" r="0.50" fx="0.75" fy="0.75" spreadMethod="pad">
+                        <stop offset="0%" stop-color="black"/>
+                        <stop offset="100%" stop-color="grey"/>
+                  </radialGradient>
+            </defs>
+            <circle id="earth" fill="url(#GradientEarth)" stroke="blue" r="100"></circle>
+        </svg>
+    </div>
+    
+    
+    <div class="tool-bar">
+        <div class="side-bar-title">Options</div>
+        <div class="side-bar-element">
+            Use
+            <br>
+            <select id="select-use">
+             <option>All</option>
+              <option>Military</option>
+              <option>Civil</option>
+              <option>Commercial</option>
+              <option>Government</option>
+            </select>
+        </div>
+        <div class="side-bar-element">
+            Purpose
+            <br>
+            <select id="select-purpose">
+              <option>All</option>
+              <option>Earth Observation</option>
+              <option>Communications</option>
+              <option>Space Science</option>
+            </select>
+            
+        </div>
+        <div class="side-bar-element">
+            Theme
+            <br>
+            <select id="select-theme">
+              <option>Dark</option>
+              <option>Light</option>
+            </select>
+        </div>
+        <div class="side-bar-element">
+            Orbit Types
+            <br>
+            <input type="checkbox" id="orbit-chekbox">
+        </div>
+        
+    </div>
+</div>
+
+    <div class="footer" id="footer">
+        <div>
+            <p id="orbit-info">Only shows a rough estimate of satelite distribution around Earth</p>
+        </div>
+    </div>    
+
+<script src="https://d3js.org/d3.v5.js"></script>
+<script src="https://d3js.org/d3-array.v1.min.js"></script>
+<script src="https://d3js.org/d3-collection.v1.min.js"></script>
+<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+<script src="https://d3js.org/d3-quadtree.v1.min.js"></script>
+<script src="https://d3js.org/d3-selection.v1.min.js"></script>
+<script src="https://d3js.org/d3-timer.v1.min.js"></script>
+<script src="https://d3js.org/d3-force.v1.min.js"></script>
+<script src="https://d3js.org/d3-color.v1.min.js"></script>
+<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
+<script src="https://d3js.org/d3-ease.v1.min.js"></script>
+<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
+<script src="https://d3js.org/d3-selection.v1.min.js"></script>
+<script src="https://d3js.org/d3-timer.v1.min.js"></script>
+<script src="https://d3js.org/d3-transition.v1.min.js"></script>
+<script src="https://d3js.org/d3-drag.v1.min.js"></script>
+<script src="https://d3js.org/d3-zoom.v1.min.js"></script>
+
+<script>
+    
+    var satelites = [];
+    var circles;
+    var simulation;
+    var container = d3.select("svg").append("g");
+    var div = d3.select("body").append("div").attr("class", "tooltip");
+    
+    //toggle variable for orbit types
+    var orbitType = false;
+    
+    //used by herper methods to resolve color themes
+    var color = "";
+    
+    //satelite size
+    //ued everywhere in the script to set constant size of satelites
+    var satSize = 7;
+    
+    //farthest you can zoom out is 0.002
+    //closest you can go to is 2
+    //starting value should be 1
+    var ratio = 1;
+
+    //fetching a comma separated value file with information of satelites
+    // satelites is a JSON object filled with the parsed data
+    d3.csv("/../csv/satelites.csv").then(function(data) {
+        //setting it to a field variable for later use
+        satelites = data;
+        this.ex();
+    });
+    
+    
+    function ex() {
+                
+        //adding circles here
+         circles = d3.select("svg")
+        .selectAll("circle") //i don't understand this line
+        .data(satelites) //set the data that I'm going to use for the visualization
+        .enter() //this will "enter" the data and iterate through it
+        .append("circle") //appends a circle to the HTML
+        .attr("r", function(d) { //d is a reference to EACH INDEX of test
+                var mass;
+//                if (d.Apogee == "") { //data cleaning, needs to be moved
+//                    return 0;
+//                }
+                if (d.Name == "ISS") {
+                    return 20;
+                }
+                if (d.Name == "Moon") {
+                    return 30;
+                }
+            mass = parseInt(d.Mass);
+             
+//             return mass / 100;
+             return satSize;        
+        })
+        .attr("fill", function(d) {
+            
+             if(d.Name == "Moon") {
+                 return "url(#GradientMoon)";
+             }
+             
+            var tempColor = "";    
+                 tempColor = resolveColorDark(d);
+             
+             return tempColor;
+         
+         
+         })
+        .on("mouseover", function(d) {		
+            div.transition()		
+                .duration(300)		
+                .style("opacity", .95)
+                .style("background", function() {
+                
+                    if(d.Name == "ISS") {
+                        return "pink";
+                    }
+                
+                    return resolveColorDark(d);
+            })
+            .style("left", (d3.event.pageX + 10) + "px")
+            .style("top", (d3.event.pageY - 100) + "px")
+            .style("height", 120);
+            div.html("<b class='tooltip-title'>" + d.Name + "</b><br/><br/>"  + "Country: " + d.Country + "<br/>Use: " + d.Use+ "<br/>Purpose: " + d.Purpose + "<br/>Altitude: " + d.Apogee + "km")	
+                .style("left", (d3.event.pageX) + "px")		
+                .style("top", (d3.event.pageY - 28) + "px");
+             
+            d3.select("#orbit-info")
+            .transition()
+            .delay(500)
+            .duration(500)
+            .style("opacity", .9)
+            .text(function() { return d.Comments});
+            
+             console.log(d.Comments);
+            })
+        .on("mouseout", function(d) {		
+            div.transition()		
+                .duration(200)		
+                .style("opacity", 0);
+             
+            d3.select("#orbit-info")
+            .transition()
+            .duration(500)
+            .style("opacity", 0)
+        });
+        
+        //simulation for radial force
+        var simulation = d3.forceSimulation(satelites)
+        .force("charge", d3.forceCollide().radius(0))
+        .force("r", d3.forceRadial(function(d) {return parseInt(d.Apogee) * ratio;}))
+        .on("tick", function() {
+                circles
+                .attr("cx", function(d) { return d.x; })
+                .attr("cy", function(d) { return d.y; }); 
+            });
+        
+        //"zoom" functionanlity
+        d3.select("svg")
+        .on("wheel", function() {
+            var direction = d3.event.wheelDelta;
+            if(direction > 0) { //scrolling down
+                if(ratio - 0.050 > 0){
+                    ratio = ratio - 0.050;
+                } else if (ratio - 0.010 > 0) {
+                    ratio = ratio - 0.010; 
+                } else if (ratio - 0.001 > 0) {
+                    ratio = ratio - 0.001;
+                }
+            } else if (direction < 0 ) { //scrolling up
+                if(ratio + 0.020 < 2) {
+                    ratio = ratio + 0.020;    
+                }
+            }  
+            
+            if(orbitType == true) {
+                d3.select("#LEO").transition().delay(0).duration(1200).attr("r", 1900 * ratio + 50).attr("fill", "#666666").attr("opacity", .1);
+                d3.select("#MEO").transition().delay(0).duration(1200).attr("r", 31700 * ratio + 50).attr("fill", "#666666").attr("opacity", .1);
+                d3.select("#GSO").transition().delay(0).duration(1200).attr("r", 40000 * ratio).attr("fill", "#666666").attr("opacity", .1);
+                d3.select("#HEO").transition().delay(0).duration(1200).attr("r", 370000 * ratio + 50).attr("fill", "#666666").attr("opacity", .1);
+            }
+            
+             d3.select("#earth").transition().delay(0).duration(1300).attr("r", 100 * ratio);
+            
+                simulation.force("r", d3.forceRadial(function(d) {return parseInt(d.Apogee) *  ratio;}))
+                .alpha(0.5).restart();
+                
+        })
+        //this shit doesn't work, firefox sucks
+        .on("DOMMouseScroll.zoom", null) // disables older versions of Firefox
+        .on("wheel.zoom", null); // disables newer versions of Firefox;
+        
+        
+    }
+    
+    
+    
+    
+    
+    //Options (trigger with user interaction)
+    
+    //Purpose
+    d3.select("#select-purpose")
+    .on("change", function() {
+        
+                var selectedPurpose = d3.select("#select-purpose").property("value");
+                circles.transition().duration(1000).attr("r", function(d) {
+                    if(selectedPurpose == d.Purpose) {
+                        return satSize;
+                    } else if(selectedPurpose == "All") {
+                        return satSize;
+                    } else {
+                        return 0;
+                    }
+                    })
+    });
+    
+    //Use
+    d3.select("#select-use")
+    .on("change", function() {
+    
+                var selectedUse = d3.select("#select-use").property("value");
+                console.log("selectedPurpose");
+                circles.transition().duration(1000).attr("r", function(d) {
+                    if(selectedUse == d.Use) {
+                        return satSize;
+                    } else if(selectedUse == "All") {
+                        return satSize;
+                    } else {
+                        return 0;
+                    }
+                    })
+    });
+    
+    //Theme
+    d3.select("#select-theme")
+    .on("change", function() {
+        
+        var selectedTheme = d3.select("#select-theme").property("value");
+        
+        if(selectedTheme == "Light") {
+            circles.transition().duration(2000).attr("fill", function(d) {return resolveColorLight(d)})
+            d3.select("body")
+            .classed("dark", false)
+            .classed("light", true);
+        } else {
+            circles.transition().duration(2000).attr("fill", function(d) {return resolveColorDark(d)})
+            d3.select("body")
+            .classed("light", false)
+            .classed("dark", true);
+        }
+        
+        
+    });
+    
+    //Orbit Types
+    d3.select("#orbit-chekbox")
+    .on("change", function() {
+        
+    
+    //Orbit types
+    if(d3.select("#orbit-chekbox").property("checked")) {
+        console.log("checked");
+        orbitType = true;
+        d3.select("#LEO").transition().delay(0).duration(1200).attr("r", 1950 * ratio).attr("fill", "#666666").attr("opacity", .1)
+        d3.select("#MEO").transition().delay(0).duration(1200).attr("r", 31750 * ratio).attr("fill", "#666666").attr("opacity", .1)
+        d3.select("#GSO").transition().delay(0).duration(1200).attr("r", 40000 * ratio).attr("fill", "#666666").attr("opacity", .1)
+        d3.select("#HEO").transition().delay(0).duration(1200).attr("r", 370050 * ratio).attr("fill", "#666666").attr("opacity", .1)
+        
+    } else {
+        orbitType = false;
+        d3.select("#LEO").transition().delay(0).duration(1200).attr("r", 0 * ratio)
+        d3.select("#MEO").transition().delay(0).duration(1200).attr("r", 0 * ratio)
+        d3.select("#GSO").transition().delay(0).duration(1200).attr("r", 0 * ratio)
+        d3.select("#HEO").transition().delay(0).duration(1200).attr("r", 0 * ratio)
+    }
+        
+        
+})
+    
+    
+    //Orbit Type Hover
+    d3.select("#LEO").on("mouseover", function() {
+        console.log("hovered over LEO")
+        d3.select("#orbit-info")
+        .transition()
+        .delay(500)
+        .duration(500)
+        .style("opacity", .9)
+        .text("The Low Erth Orbit (2,000km or less) provides high bandwidth and low communication time latency. Earth observation satellites and spy satellites use LEO as they are able to see the surface of the Earth more clearly as they are not so far away. The International Space Station also uses LOE")
+    })
+    .on("mouseout", function() {
+        console.log("left LEO")
+        d3.select("#orbit-info")
+        .transition()
+        .duration(500)
+        .style("opacity", 0)
+    });
+    d3.select("#MEO").on("mouseover", function() {
+        console.log("hovered over MEO")
+        d3.select("#orbit-info")
+        .transition()
+        .delay(500)
+        .duration(500)
+        .style("opacity", .9)
+        .text("The Medium Erth Orbit (2,000km to 35,786km) is most commonly used for navigation, communication, and geodetic/space science. Communications satellites that cover the North and South Pole are also put in MEO.")
+    })
+    .on("mouseout", function() {
+        console.log("left MEO")
+        d3.select("#orbit-info")
+        .transition()
+        .duration(500)
+        .style("opacity", 0)
+    });
+    d3.select("#GSO").on("mouseover", function() {
+        console.log("hovered over GSO")
+        d3.select("#orbit-info")
+        .transition()
+        .delay(500)
+        .duration(500)
+        .style("opacity", .9)
+        .text("The Geostationary Orbit has a peroid equal to the Earth's rotational period (one sidereal day), which makes its satelites stationary relative to the ground. Most commercial communications satellites, broadcast satellites and SBAS satellites operate in geostationary orbits.")
+    })
+    .on("mouseout", function() {
+        console.log("left GSO")
+        d3.select("#orbit-info")
+        .transition()
+        .duration(500)
+        .style("opacity", 0)
+    });  
+    d3.select("#HEO").on("mouseover", function() {
+        console.log("hovered over HEO")
+        d3.select("#orbit-info")
+        .transition()
+        .delay(500)
+        .duration(500)
+        .style("opacity", .9)
+        .text("The High Earth orbit is considered above 35,786 km")
+    })
+    .on("mouseout", function() {
+        console.log("left HEO")
+        d3.select("#orbit-info")
+        .transition()
+        .duration(500)
+        .style("opacity", 0)
+    });
+    
+    
+    
+    
+    
+    
+    //Helper methods
+    
+    //resolve dark satelite colors
+    function resolveColorDark(d) {
+        var color = "";
+                
+                if (d.Name == "ISS") {
+                    color = "#000FFF";  //royal blue 
+                } else if(d.Use == "Military") {
+                     color = "#FA9CFB"; //pink
+                } else if(d.Use == "Civil") {
+                    color = "#C70039"; //red
+                } else if(d.Use == "Commercial"){
+                   color = "#5873FE"; //blue
+                } else if(d.Use == "Government"){
+//                    color = "#FFF637"; //yellow
+                    color = "#FFF000"; //yellow
+                } else if (d.Use == "Commercial/Government" || d.Use == "Government/Commercial" ) {
+                    color = "#1F980E"; // green
+                } else if (d.Use == "Commercial/Military" || d.Use == "Military/Commercial" ) {
+                    color = "#7C00B6";//purple
+                } else if (d.Use == "Military/Government" || d.Use == "Government/Military" ) {
+                    color = "#FC583C";//orange
+                } else {
+                    color = "#647E83";
+                }
+                   return color; 
+    }
+    
+    //resolve light satelite colors
+    function resolveColorLight(d) {
+        
+        console.log("resolving light colors");
+        
+        var color = "";
+                if(d.Use == "Military") {
+                   color = "#000000"; //black
+                } else if(d.Use == "Civil") { 
+                    color = "#6EB02F"; //green
+                } else if(d.Use == "Commercial"){
+                   color = "#4094E3"; //blue
+                } else if(d.Use == "Government"){
+                    color = "#A8A8A8"; //grey
+                } else if (d.Name == "ISS") {
+                   // color = "red";          
+                } else {
+                    color = "red";
+                }
+                   return color; 
+    }
+    
+
+</script>
+
+
+
+
+</body>
+</html>
