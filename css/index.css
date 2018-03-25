@@ -1,0 +1,108 @@
+body {
+    background-color: black;
+    color: whitesmoke;
+}
+
+.light {
+    background-color: white;
+    color: #505050;
+    transition: background 2s, color 2s;  
+}
+
+.dark {
+    background-color: black;
+    color: whitesmoke;
+    transition: background 2s, color 2s;  
+}
+
+select option {
+    background: black;
+}
+
+.LEO {
+    
+}
+
+.container {
+    display: flex;  
+  flex-flow: row;
+    flex-wrap: nowrap;
+  font-weight: bold;
+  text-align: center
+}
+
+.visual {
+    flex: 20;
+}
+
+.side-bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-family: monospace;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+    padding: 5px;
+    background: rgba(, 0, 0, 0.2);
+}
+
+.side-bar-title {
+    padding-top: 30px;
+    line-height: 26.4px;
+    font-size: 20px;
+}
+
+.side-bar-element {
+    line-height: 20.4px;
+    font-size: 12px;
+}
+
+.tool-bar {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    font-family: monospace;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+    padding: 5px;
+}
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    font-family: monospace;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 500;
+    padding-top: 5px;
+    line-height: 12.4px;
+    font-size: 10px;
+    padding-left: 250px;
+    padding-right: 250px;
+}
+
+div.tooltip {	
+    position: absolute;			
+    text-align: center;		
+
+    font-family: monospace;
+	font-style: normal;
+	font-variant: normal;
+	font-weight: 1000;
+    color: black;
+    width: 350px;									
+    padding: 2px;					
+    border: 0px;		
+    border-radius: 10px;			
+    pointer-events: none;
+}
+
+.tooltip-title {
+    font-size: 15px;
+}
