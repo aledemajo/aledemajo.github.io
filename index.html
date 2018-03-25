@@ -111,10 +111,7 @@
 <script src="https://d3js.org/d3-transition.v1.min.js"></script>
 <script src="https://d3js.org/d3-drag.v1.min.js"></script>
 <script src="https://d3js.org/d3-zoom.v1.min.js"></script>
-<script src="https://d3js.org/d3-collection.v1.min.js"></script>
-<script src="https://d3js.org/d3-dispatch.v1.min.js"></script>
-<script src="https://d3js.org/d3-dsv.v1.min.js"></script>
-<script src="https://d3js.org/d3-request.v1.min.js"></script>
+
 
 <script>
     
@@ -140,21 +137,23 @@
     var ratio = 1;
     
     
-    d3.request("/../satelites.csv")
-        .mimeType("text/plain")
-        .response(function(xhr) { return psv.parse(xhr.responseText) })
-        .get(function(data) {
-        console.log("pipe-delimited data:")
-        console.log(data);
-    });
-
+//    var aaa = d3.request("https://aledemajo.github.io/satelites.csv")
+//        .mimeType("text/plain")
+//        .get(function(data) {
+//            console.log("data:")
+//            //console.log(data);
+//            satelites = data.responseText;
+//            console.log(satelites);
+//        //    this.ex();
+//    });
+    
     //fetching a comma separated value file with information of satelites
     // satelites is a JSON object filled with the parsed data
-//    d3.csv("/../csv/satelites.csv").then(function(data) {
-//        //setting it to a field variable for later use
-//        satelites = data;
-//        this.ex();
-//    });
+    d3.csv("https://aledemajo.github.io/satelites.csv").then(function(data) {
+        //setting it to a field variable for later use
+        satelites = data;
+        this.ex();
+    });
     
     
     function ex() {
