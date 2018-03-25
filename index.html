@@ -154,9 +154,6 @@
         .append("circle") //appends a circle to the HTML
         .attr("r", function(d) { //d is a reference to EACH INDEX of test
                 var mass;
-//                if (d.Apogee == "") { //data cleaning, needs to be moved
-//                    return 0;
-//                }
                 if (d.Name == "ISS") {
                     return 20;
                 }
@@ -264,8 +261,6 @@
         //this shit doesn't work, firefox sucks
         .on("DOMMouseScroll.zoom", null) // disables older versions of Firefox
         .on("wheel.zoom", null); // disables newer versions of Firefox;
-        
-        
     }
     
     
@@ -289,6 +284,7 @@
                     }
                     })
     });
+    
     
     //Use
     d3.select("#select-use")
