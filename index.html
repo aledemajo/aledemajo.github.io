@@ -69,15 +69,6 @@
               <option>Communications</option>
               <option>Space Science</option>
             </select>
-            
-        </div>
-        <div class="side-bar-element">
-            Theme
-            <br>
-            <select id="select-theme">
-              <option>Dark</option>
-              <option>Light</option>
-            </select>
         </div>
         <div class="side-bar-element">
             Orbit Types
@@ -115,17 +106,13 @@
 
 <script>
     
-    var satelites = [];
-    var circles;
-    var simulation;
-    var container = d3.select("svg").append("g");
-    var div = d3.select("body").append("div").attr("class", "tooltip");
+    var satelites = []; //satellite data
+    var circles; //array of all SVG circles
+    var simulation; //used to move cirlces inside SVG
+    var tooltip = d3.select("body").append("div").attr("class", "tooltip");
     
-    //toggle variable for orbit types
+    //bool variable for orbit type checkbox
     var orbitType = false;
-    
-    //used by herper methods to resolve color themes
-    var color = "";
     
     //satelite size
     //ued everywhere in the script to set constant size of satelites
@@ -136,35 +123,23 @@
     //starting value should be 1
     var ratio = 1;
     
-    
-//    var aaa = d3.request("https://aledemajo.github.io/satelites.csv")
-//        .mimeType("text/plain")
-//        .get(function(data) {
-//            console.log("data:")
-//            //console.log(data);
-//            satelites = data.responseText;
-//            console.log(satelites);
-//        //    this.ex();
-//    });
-    
-    //fetching a comma separated value file with information of satelites
-    // satelites is a JSON object filled with the parsed data
+
+    //fetching CSV file from server
     d3.csv("https://aledemajo.github.io/satelites.csv").then(function(data) {
-        //setting it to a field variable for later use
         satelites = data;
-        this.ex();
+        this.ex();//drawing visualization
     });
     
     
     function ex() {
                 
-        //adding circles here
+        
          circles = d3.select("svg")
-        .selectAll("circle") //i don't understand this line
-        .data(satelites) //set the data that I'm going to use for the visualization
+        .selectAll("circle") 
+        .data(satelites)
         .enter() //this will "enter" the data and iterate through it
-        .append("circle") //appends a circle to the HTML
-        .attr("r", function(d) { //d is a reference to EACH INDEX of test
+        .append("circle") //appends a circle per satellite
+        .attr("r", function(d) { //d is a reference to each satellite
                 var mass;
                 if (d.Name == "ISS") {
                     return 20;
@@ -172,11 +147,8 @@
                 if (d.Name == "Moon") {
                     return 30;
                 }
-            mass = parseInt(d.Mass);
-             
-//             return mass / 100;
              return satSize;        
-        })
+        }) //sets radious
         .attr("fill", function(d) {
             
              if(d.Name == "Moon") {
@@ -189,23 +161,18 @@
              return tempColor;
          
          
-         })
+         }) //sets fill color based on satellite use
         .on("mouseover", function(d) {		
-            div.transition()		
+            tooltip.transition()		
                 .duration(300)		
                 .style("opacity", .95)
                 .style("background", function() {
-                
-                    if(d.Name == "ISS") {
-                        return "pink";
-                    }
-                
                     return resolveColorDark(d);
             })
             .style("left", (d3.event.pageX + 10) + "px")
             .style("top", (d3.event.pageY - 100) + "px")
             .style("height", 120);
-            div.html("<b class='tooltip-title'>" + d.Name + "</b><br/><br/>"  + "Country: " + d.Country + "<br/>Use: " + d.Use+ "<br/>Purpose: " + d.Purpose + "<br/>Altitude: " + d.Apogee + "km")	
+            tooltip.html("<b class='tooltip-title'>" + d.Name + "</b><br/><br/>"  + "Country: " + d.Country + "<br/>Use: " + d.Use+ "<br/>Purpose: " + d.Purpose + "<br/>Altitude: " + d.Apogee + "km")	
                 .style("left", (d3.event.pageX) + "px")		
                 .style("top", (d3.event.pageY - 28) + "px");
              
@@ -217,9 +184,9 @@
             .text(function() { return d.Comments});
             
              console.log(d.Comments);
-            })
+            }) //tooltip
         .on("mouseout", function(d) {		
-            div.transition()		
+            tooltip.transition()		
                 .duration(200)		
                 .style("opacity", 0);
              
@@ -227,21 +194,25 @@
             .transition()
             .duration(500)
             .style("opacity", 0)
-        });
+        }); //tooltip
+        
+        
         
         //simulation for radial force
         var simulation = d3.forceSimulation(satelites)
         .force("charge", d3.forceCollide().radius(0))
-        .force("r", d3.forceRadial(function(d) {return parseInt(d.Apogee) * ratio;}))
+        .force("r", d3.forceRadial(function(d) {return parseInt(d.Apogee) * ratio;})) //applies radial force on circles based on Apogee
         .on("tick", function() {
                 circles
                 .attr("cx", function(d) { return d.x; })
                 .attr("cy", function(d) { return d.y; }); 
             });
         
-        //"zoom" functionanlity
+        
+        
+        //"zoom" functionality for satellites, earth and orbit types
         d3.select("svg")
-        .on("wheel", function() {
+        .on("wheel", function() { //changes the value of ratio every time the mouse wheel moves
             var direction = d3.event.wheelDelta;
             if(direction > 0) { //scrolling down
                 if(ratio - 0.050 > 0){
@@ -270,9 +241,6 @@
                 .alpha(0.5).restart();
                 
         })
-        //this shit doesn't work, firefox sucks
-        .on("DOMMouseScroll.zoom", null) // disables older versions of Firefox
-        .on("wheel.zoom", null); // disables newer versions of Firefox;
     }
     
     
@@ -297,7 +265,6 @@
                     })
     });
     
-    
     //Use
     d3.select("#select-use")
     .on("change", function() {
@@ -313,27 +280,6 @@
                         return 0;
                     }
                     })
-    });
-    
-    //Theme
-    d3.select("#select-theme")
-    .on("change", function() {
-        
-        var selectedTheme = d3.select("#select-theme").property("value");
-        
-        if(selectedTheme == "Light") {
-            circles.transition().duration(2000).attr("fill", function(d) {return resolveColorLight(d)})
-            d3.select("body")
-            .classed("dark", false)
-            .classed("light", true);
-        } else {
-            circles.transition().duration(2000).attr("fill", function(d) {return resolveColorDark(d)})
-            d3.select("body")
-            .classed("light", false)
-            .classed("dark", true);
-        }
-        
-        
     });
     
     //Orbit Types
@@ -429,10 +375,6 @@
     });
     
     
-    
-    
-    
-    
     //Helper methods
     
     //resolve dark satelite colors
@@ -458,28 +400,6 @@
                     color = "#FC583C";//orange
                 } else {
                     color = "#647E83";
-                }
-                   return color; 
-    }
-    
-    //resolve light satelite colors
-    function resolveColorLight(d) {
-        
-        console.log("resolving light colors");
-        
-        var color = "";
-                if(d.Use == "Military") {
-                   color = "#000000"; //black
-                } else if(d.Use == "Civil") { 
-                    color = "#6EB02F"; //green
-                } else if(d.Use == "Commercial"){
-                   color = "#4094E3"; //blue
-                } else if(d.Use == "Government"){
-                    color = "#A8A8A8"; //grey
-                } else if (d.Name == "ISS") {
-                   // color = "red";          
-                } else {
-                    color = "red";
                 }
                    return color; 
     }
