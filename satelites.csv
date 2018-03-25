@@ -1,6 +1,5 @@
 Name,Country,Owner,Use,Purpose,OrbitClass,Perigee,Apogee,Period,Mass,LaunchDate,COSPAR,NORAD,Comments
 Aalto-1,Finland,University of Aalto,Civil,Technology Development,LEO,497,517,94.7,5,6/23/17,2017-036L,42775,Technology development and education.
-Moon,,,,,,,384400,,,,,,
 AAUSat-4,Denmark,University of Aalborg,Civil,Earth Observation,LEO,442,687,95.9,1,4/25/16,2016-025E,41460,Carries AIS system.
 "ABS-2 (Koreasat-8, ST-3)",Multinational,Asia Broadcast Satellite Ltd.,Commercial,Communications,GEO,35778,35793,1436.03,6330,2/6/14,2014-006A,39508,"32 C-band, 51 Ku-band, and 6 Ka-band transponders. $214 million lawsuit for bad beam."
 ABS-2A,Multinational,Asia Broadcast Satellite Ltd.,Commercial,Communications,GEO,35700,35700,1436.1,1800,6/15/16,2016-038A,41588,
@@ -1095,6 +1094,7 @@ MMS-1 (Magnetospheric Multiscale Mission),USA,National Aeronautics and Space Adm
 MMS-2 (Magnetospheric Multiscale Mission),USA,National Aeronautics and Space Administration (NASA),Government,Space Science,Elliptical,1357,70117,1433,1360,3/13/15,2015-011B,40483,
 MMS-3 (Magnetospheric Multiscale Mission),USA,National Aeronautics and Space Administration (NASA),Government,Space Science,Elliptical,1429,70045,1433,1360,3/13/15,2015-011C,40484,
 MMS-4 (Magnetospheric Multiscale Mission),USA,National Aeronautics and Space Administration (NASA),Government,Space Science,Elliptical,1317,70157,1433,1360,3/13/15,2015-011D,40485,
+Moon,,,,,,,384400,,,,,,
 MOST (Microvariability & Oscillations of STars),Canada,Canadian Space Agency,Government,Space Science,LEO,817,832,101.4,53,6/30/03,2003-031D,27843,"Canada's space telescope, dubbed the ""Humble Telescope""; minisatellite; monitor brightness variations in stars."
 Mozhayets 4 (RS-22),Russia,Mozhaisky Space Engineering Academy,Civil,Technology Development,LEO,669,690,98.3,64,9/27/03,2003-042A,27939,Training satellite; carries an amateur radio payload.
 MSAT 1,USA/Canada,Mobile Satellite Ventures,Commercial,Communications,GEO,35763,35809,1436.09,2850,4/20/96,1996-022A,23846,Wireless network for North America

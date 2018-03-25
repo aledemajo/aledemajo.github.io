@@ -1,6 +1,8 @@
 body {
     background-color: black;
     color: whitesmoke;
+    height: 100%;
+    overflow: hidden;
 }
 
 .light {
