@@ -145,16 +145,16 @@
         .response(function(xhr) { return psv.parse(xhr.responseText) })
         .get(function(data) {
         console.log("pipe-delimited data:")
-        console.log(data[1]);
+        console.log(data);
     });
 
     //fetching a comma separated value file with information of satelites
     // satelites is a JSON object filled with the parsed data
-    d3.csv("/../csv/satelites.csv").then(function(data) {
-        //setting it to a field variable for later use
-        satelites = data;
-        this.ex();
-    });
+//    d3.csv("/../csv/satelites.csv").then(function(data) {
+//        //setting it to a field variable for later use
+//        satelites = data;
+//        this.ex();
+//    });
     
     
     function ex() {
