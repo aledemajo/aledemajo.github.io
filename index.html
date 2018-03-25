@@ -134,6 +134,15 @@
     //closest you can go to is 2
     //starting value should be 1
     var ratio = 1;
+    
+    
+    d3.request("/../satelites.csv")
+        .mimeType("text/plain")
+        .response(function(xhr) { return psv.parse(xhr.responseText) })
+        .get(function(data) {
+        console.log("pipe-delimited data:")
+        console.log(data[1]);
+    });
 
     //fetching a comma separated value file with information of satelites
     // satelites is a JSON object filled with the parsed data
