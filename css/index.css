@@ -7,6 +7,23 @@ body {
     overflow: hidden;
 }
 
+select {
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    background-color: lightgrey;
+    font-family: monospace;
+	font-style: normal;
+	font-variant: normal;
+    width: 130px;
+}
+
+option {
+    font-family: monospace;
+	font-style: normal;
+	font-variant: normal;
+}
+
 .light {
     background-color: white;
     color: #505050;

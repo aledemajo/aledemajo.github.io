@@ -32,7 +32,7 @@
             <defs>
                 <radialGradient id="GradientEarth" cx="0.5" cy="0.5" r="0.7" fx="0.75" fy="0.75" spreadMethod="pad">
                         <stop offset="0%" stop-color="#006600"/>
-<!--                        <stop offset="0%" stop-color="#1D9D21"/>-->
+
                         <stop offset="100%" stop-color="#000FFF"/>
                   </radialGradient>
             </defs>
@@ -64,6 +64,7 @@
             Purpose
             <br>
             <select id="select-purpose">
+             <outgroup>
               <option value="1">All</option>
               <option>Earth Observation</option>
               <option>Communications</option>
@@ -261,12 +262,12 @@
                 circles.transition().duration(1000).attr("r", function(d) {
                     if(selectedPurpose == d.Purpose) {
                         return satSize;
-                    } else if(selectedPurpose == "All") {
+                    } else if(selectedPurpose == "1") {
                         return resolveRadius(d);
                     } else {
                         return 0;
                     }
-                    })
+        })
     });
     
     //Use
@@ -281,7 +282,7 @@
                 circles.transition().duration(1000).attr("r", function(d) {
                     if(selectedUse == d.Use) {
                         return satSize;
-                    } else if(selectedUse == "All") {
+                    } else if(selectedUse == "1") {
                         return resolveRadius(d)
                     } else {
                         return 0;
@@ -394,6 +395,8 @@
         if (d.Name == "Moon") {
             return 25;
         }
+        
+        console.log("resolve radius is being called, sat size is: " + satSize)
         return satSize;     
     }
     
