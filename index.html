@@ -271,13 +271,6 @@
         })
     }
     
-    
-    //wait two seconds and display modal
-    
-    
-    
-    
-    
     //Options (trigger with user interaction)
     
     //Purpose
@@ -454,6 +447,30 @@
                 }
                    return color; 
     }
+    
+    
+    
+    //wait two seconds and display modal
+    d3.select("#modal")
+    .style("opacity", 0)
+    .transition()
+    .delay(1000)
+    .duration(2000)
+    .style("opacity", 0.92)
+    .style("display", "block");
+    
+    
+    d3.select("body").on("click", function() {
+    d3.select("#modal")
+    .transition()
+    .duration(1000)
+    .style("opacity", 0)
+    .on("end", function() {
+      d3.select("#modal").style("display", "none");  
+    })
+    })
+    
+    
     
 
 </script>
