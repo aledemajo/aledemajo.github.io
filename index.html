@@ -139,16 +139,9 @@
         .data(satelites)
         .enter() //this will "enter" the data and iterate through it
         .append("circle") //appends a circle per satellite
-        .attr("r", function(d) { //d is a reference to each satellite
-                var mass;
-                if (d.Name == "ISS") {
-                    return 20;
-                }
-                if (d.Name == "Moon") {
-                    return 30;
-                }
-             return satSize;        
-        }) //sets radious
+        .attr("r", function(d) {
+             return resolveRadius(d);
+         }) //sets radious
         .attr("fill", function(d) {
             
              if(d.Name == "Moon") {
@@ -212,9 +205,9 @@
         
         //"zoom" functionality for satellites, earth and orbit types
         d3.select("svg")
-        .on("wheel DOMMouseScroll", function() { //changes the value of ratio every time the mouse wheel moves
+        .on("wheel", function(e) { //changes the value of ratio every time the mouse wheel moves
             var direction = d3.event.wheelDelta;
-            console.log(d3.event.detail);
+            console.log(d3.event.type)
             if(direction > 0) { //scrolling down
                 if(ratio - 0.050 > 0){
                     ratio = ratio - 0.050;
@@ -254,12 +247,14 @@
     d3.select("#select-purpose")
     .on("change", function() {
         
+//                d3.select("#select-use").property("value") = "All";
+                
                 var selectedPurpose = d3.select("#select-purpose").property("value");
                 circles.transition().duration(1000).attr("r", function(d) {
                     if(selectedPurpose == d.Purpose) {
                         return satSize;
                     } else if(selectedPurpose == "All") {
-                        return satSize;
+                        return resolveRadius(d);
                     } else {
                         return 0;
                     }
@@ -276,7 +271,7 @@
                     if(selectedUse == d.Use) {
                         return satSize;
                     } else if(selectedUse == "All") {
-                        return satSize;
+                        return resolveRadius(d)
                     } else {
                         return 0;
                     }
@@ -378,7 +373,19 @@
     
     //Helper methods
     
-    //resolve dark satelite colors
+    //resolve satellite radius based on mass
+    function resolveRadius(d) {
+        if (d.Name == "ISS") {
+            return 20;
+        }
+        
+        if (d.Name == "Moon") {
+            return 30;
+        }
+        return satSize;     
+    }
+    
+    //resolve dark satellite colors
     function resolveColorDark(d) {
         var color = "";
                 

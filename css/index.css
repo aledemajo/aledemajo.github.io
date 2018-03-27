@@ -117,11 +117,7 @@ div.tooltip {
 @media all and (max-width: 1150px) {
     svg {
         width: 700px;
-        height: 500px;
-    }
-    
-    .side-bar{
-            color: green;
+        height: 550px;
     }
 }
 
