@@ -212,8 +212,9 @@
         
         //"zoom" functionality for satellites, earth and orbit types
         d3.select("svg")
-        .on("wheel", function() { //changes the value of ratio every time the mouse wheel moves
+        .on("wheel DOMMouseScroll", function() { //changes the value of ratio every time the mouse wheel moves
             var direction = d3.event.wheelDelta;
+            console.log(d3.event.detail);
             if(direction > 0) { //scrolling down
                 if(ratio - 0.050 > 0){
                     ratio = ratio - 0.050;
@@ -235,7 +236,7 @@
                 d3.select("#HEO").transition().delay(0).duration(1200).attr("r", 370000 * ratio + 50).attr("fill", "#666666").attr("opacity", .1);
             }
             
-             d3.select("#earth").transition().delay(0).duration(1300).attr("r", 100 * ratio);
+             d3.select("#earth").transition().delay(0).duration(1000).attr("r", 100 * ratio);
             
                 simulation.force("r", d3.forceRadial(function(d) {return parseInt(d.Apogee) *  ratio;}))
                 .alpha(0.5).restart();

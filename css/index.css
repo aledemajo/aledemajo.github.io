@@ -1,8 +1,14 @@
+
+
 body {
     background-color: black;
     color: whitesmoke;
     height: 100%;
     overflow: hidden;
+}
+
+select option {
+    background: black;
 }
 
 .light {
@@ -15,14 +21,6 @@ body {
     background-color: black;
     color: whitesmoke;
     transition: background 2s, color 2s;  
-}
-
-select option {
-    background: black;
-}
-
-.LEO {
-    
 }
 
 .container {
@@ -107,4 +105,26 @@ div.tooltip {
 
 .tooltip-title {
     font-size: 15px;
+}
+
+
+/*Media queries*/
+
+@media all and (max-width: 1300px) {
+    svg {
+        width: 900px;
+    }
+}
+
+@media all and (max-width: 1150px) {
+    svg {
+        width: 700px;
+    }
+}
+
+
+@media all and (max-width: 1000px) {
+    svg {
+        width: 500px;
+    }
 }
