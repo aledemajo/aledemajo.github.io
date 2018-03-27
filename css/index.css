@@ -116,9 +116,11 @@ div.tooltip {
     }
 }
 
+/*esta es la pantalla de mi mama*/
 @media all and (max-width: 1150px) {
     svg {
         width: 700px;
+        height: 600px;
     }
 }
 
