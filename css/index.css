@@ -7,10 +7,6 @@ body {
     overflow: hidden;
 }
 
-select option {
-    background: black;
-}
-
 .light {
     background-color: white;
     color: #505050;
@@ -120,7 +116,11 @@ div.tooltip {
 @media all and (max-width: 1150px) {
     svg {
         width: 700px;
-        height: 600px;
+        height: 500px;
+    }
+    
+    .side-bar{
+            color: green;
     }
 }
 
