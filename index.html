@@ -155,7 +155,10 @@
          
          
          }) //sets fill color based on satellite use
-        .on("mouseover", function(d) {		
+        .on("mouseover", function(d) {	
+             
+             var html = "";
+             
             tooltip.transition()		
                 .duration(300)		
                 .style("opacity", .95)
@@ -165,7 +168,14 @@
             .style("left", (d3.event.pageX + 10) + "px")
             .style("top", (d3.event.pageY - 100) + "px")
             .style("height", 120);
-            tooltip.html("<b class='tooltip-title'>" + d.Name + "</b><br/><br/>"  + "Country: " + d.Country + "<br/>Use: " + d.Use+ "<br/>Purpose: " + d.Purpose + "<br/>Altitude: " + d.Apogee + "km")	
+             
+            if(d.Name == "Moon") {
+                html = "<b class='tooltip-title'>Moon!</b>"
+            } else {
+                html = "<b class='tooltip-title'>" + d.Name + "</b><br/><br/>"  + "Country: " + d.Country + "<br/>Use: " + d.Use+ "<br/>Purpose: " + d.Purpose + "<br/>Altitude: " + d.Apogee + "km";
+            }
+             
+            tooltip.html(html)	
                 .style("left", (d3.event.pageX) + "px")		
                 .style("top", (d3.event.pageY - 28) + "px");
              
@@ -382,7 +392,7 @@
         }
         
         if (d.Name == "Moon") {
-            return 30;
+            return 25;
         }
         return satSize;     
     }
