@@ -42,7 +42,7 @@
                         <stop offset="100%" stop-color="grey"/>
                   </radialGradient>
             </defs>
-            <circle id="earth" fill="url(#GradientEarth)" stroke="blue" r="100"></circle>
+            <circle id="earth" fill="url(#GradientEarth)" stroke="blue" r="70"></circle>
         </svg>
     </div>
     
@@ -53,7 +53,7 @@
             Use
             <br>
             <select id="select-use">
-             <option>All</option>
+             <option value="1">All</option>
               <option>Military</option>
               <option>Civil</option>
               <option>Commercial</option>
@@ -64,7 +64,7 @@
             Purpose
             <br>
             <select id="select-purpose">
-              <option>All</option>
+              <option value="1">All</option>
               <option>Earth Observation</option>
               <option>Communications</option>
               <option>Space Science</option>
@@ -175,8 +175,6 @@
             .duration(500)
             .style("opacity", .9)
             .text(function() { return d.Comments});
-            
-             console.log(d.Comments);
             }) //tooltip
         .on("mouseout", function(d) {		
             tooltip.transition()		
@@ -207,8 +205,6 @@
         d3.select("svg")
         .on("wheel", function() { //changes the value of ratio every time the mouse wheel moves
             var direction = d3.event.deltaY;
-            console.log(d3.event.deltaY);
-            console.log(d3.event.type)
             if(direction < 0) { //scrolling down
                 if(ratio - 0.050 > 0){
                     ratio = ratio - 0.050;
@@ -230,7 +226,7 @@
                 d3.select("#HEO").transition().delay(0).duration(1200).attr("r", 370000 * ratio + 50).attr("fill", "#666666").attr("opacity", .1);
             }
             
-             d3.select("#earth").transition().delay(0).duration(1000).attr("r", 100 * ratio);
+             d3.select("#earth").transition().duration(700).attr("r", 100 * ratio);
             
                 simulation.force("r", d3.forceRadial(function(d) {return parseInt(d.Apogee) *  ratio;}))
                 .alpha(0.5).restart();
@@ -248,8 +244,9 @@
     d3.select("#select-purpose")
     .on("change", function() {
         
-//                d3.select("#select-use").property("value") = "All";
-                
+                //resetting Use drop down box to All
+                var use = d3.select("#select-use").property("value", "1");
+        
                 var selectedPurpose = d3.select("#select-purpose").property("value");
                 circles.transition().duration(1000).attr("r", function(d) {
                     if(selectedPurpose == d.Purpose) {
@@ -265,9 +262,12 @@
     //Use
     d3.select("#select-use")
     .on("change", function() {
+        
+                //resetting Use drop down box to All
+                var use = d3.select("#select-purpose").property("value", "1");
+        
     
                 var selectedUse = d3.select("#select-use").property("value");
-                console.log("selectedPurpose");
                 circles.transition().duration(1000).attr("r", function(d) {
                     if(selectedUse == d.Use) {
                         return satSize;
@@ -293,7 +293,8 @@
         d3.select("#GSO").transition().delay(0).duration(1200).attr("r", 40000 * ratio).attr("fill", "#666666").attr("opacity", .1)
         d3.select("#HEO").transition().delay(0).duration(1200).attr("r", 370050 * ratio).attr("fill", "#666666").attr("opacity", .1)
         
-    } else {
+    } 
+        else {
         orbitType = false;
         d3.select("#LEO").transition().delay(0).duration(1200).attr("r", 0 * ratio)
         d3.select("#MEO").transition().delay(0).duration(1200).attr("r", 0 * ratio)
