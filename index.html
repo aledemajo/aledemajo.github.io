@@ -7,8 +7,34 @@
 </head>
 <body>
 
+<!--   div for introduction modal -->
+<div id="modal" class="modal">
+ 
+<!-- modal contents -->
+      <div class="modal-title">
+          Satellite Distribution
+      </div>
+      <div class="modal-content">
+          <div>Each circle in this graph represents a satellite orbiting around earth. </div>
+          <br>
+          <div>Move your mouse over any satellite to learn more about it and scroll to explore the satellite system!</div>
+          <br>
+          <div>Use the options on the right side to filter by <b>use</b> and <b>prupose</b> or to learn more about the different <b>orbit types</b>.</div>
+          <br>
+          <div>Click anywhere to start!</div>
+          <br><br><br><br>
+          <div class="modal-footer">
+           <div>Visualization by Alejandro de Majo</div>
+           <br>
+            <div>Data collected and made public by UCS Satellite Database. Only shows a rough estimate of satellites orbiting around earth. </div>
+              <br>
+              Not to scale.
+            </div>
+      </div>
+  
+  </div>
+
 <div class="container">
-   
    
     <div class="side-bar">
        <div class="side-bar-title">
@@ -82,7 +108,7 @@
 
     <div class="footer" id="footer">
         <div>
-            <p id="orbit-info">Only shows a rough estimate of satelite distribution around Earth</p>
+            <p id="orbit-info"></p>
         </div>
     </div>    
 
@@ -145,12 +171,12 @@
          }) //sets radious
         .attr("fill", function(d) {
             
-             if(d.Name == "Moon") {
-                 return "url(#GradientMoon)";
-             }
-             
-            var tempColor = "";    
-                 tempColor = resolveColorDark(d);
+        if(d.Name == "Moon") {
+             return "url(#GradientMoon)";
+        }
+            
+            var tempColor = "";
+            tempColor = resolveColorDark(d);
              
              return tempColor;
          
@@ -246,6 +272,9 @@
     }
     
     
+    //wait two seconds and display modal
+    
+    
     
     
     
@@ -294,7 +323,6 @@
     d3.select("#orbit-chekbox")
     .on("change", function() {
         
-    
     //Orbit types
     if(d3.select("#orbit-chekbox").property("checked")) {
         console.log("checked");
