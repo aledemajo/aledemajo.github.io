@@ -109,6 +109,7 @@ div.tooltip {
 @media all and (max-width: 1300px) {
     svg {
         width: 900px;
+        height: 630px;
     }
 }
 
