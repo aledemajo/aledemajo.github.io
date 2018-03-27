@@ -205,10 +205,11 @@
         
         //"zoom" functionality for satellites, earth and orbit types
         d3.select("svg")
-        .on("wheel", function(e) { //changes the value of ratio every time the mouse wheel moves
-            var direction = d3.event.wheelDelta;
+        .on("wheel", function() { //changes the value of ratio every time the mouse wheel moves
+            var direction = d3.event.deltaY;
+            console.log(d3.event.deltaY);
             console.log(d3.event.type)
-            if(direction > 0) { //scrolling down
+            if(direction < 0) { //scrolling down
                 if(ratio - 0.050 > 0){
                     ratio = ratio - 0.050;
                 } else if (ratio - 0.010 > 0) {
@@ -216,7 +217,7 @@
                 } else if (ratio - 0.001 > 0) {
                     ratio = ratio - 0.001;
                 }
-            } else if (direction < 0 ) { //scrolling up
+            } else if (direction > 0 ) { //scrolling up
                 if(ratio + 0.020 < 2) {
                     ratio = ratio + 0.020;    
                 }
