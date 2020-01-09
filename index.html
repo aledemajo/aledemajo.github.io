@@ -7,6 +7,14 @@
     <script src="data.js"></script>
 </head>
 <body style="padding: 0px; margin: 0px;">
-    <div id="myGrid" style="height: 100%; width: 100%; padding-top: 40px; position: absolute" class="ag-theme-balham"></div>
+	<div style="padding-top: 40px; padding-bottom: 10px">
+		<button onclick="reloadData(0);">Reset Data</button>
+		<button onclick="reloadData(7);">~200,000 records</button>
+		<button onclick="reloadData(8);">~400,000 records</button>
+		<button onclick="reloadData(9);">~800,000 records</button>
+		<button onclick="reloadData(10);">~1.6M records</button>
+		<label id='lblRecords' style=""></label>
+	</div>
+    <div id="myGrid" style="height: 100%; width: 100%; position: absolute" class="ag-theme-balham"></div>
 </body>
 </html>
