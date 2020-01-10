@@ -43,6 +43,7 @@ var gridOptions = {
     sideBar: true,
     groupIncludeFooter: true,
     groupIncludeTotalFooter: true,
+    overlayLoadingTemplate: '<span class="ag-overlay-loading-center">Please wait while your rows are loading</span>',
     autoGroupColumnDef: {
         headerName:'Group',
         field: 'item'
