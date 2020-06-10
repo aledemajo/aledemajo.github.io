@@ -1,20 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>Ag-Grid Basic Example</title>
-    <script src="https://unpkg.com/@ag-grid-enterprise/all-modules@22.1.2/dist/ag-grid-enterprise.min.js"></script>
-    <script src="main.js"></script>
-    <script src="data.js"></script>
-</head>
-<body style="padding: 0px; margin: 0px;">
-	<div style="padding-top: 40px; padding-bottom: 10px">
-		<button onclick="reloadData(0);">Reset Data</button>
-		<button onclick="reloadData(7);">~200,000 records</button>
-		<button onclick="reloadData(8);">~400,000 records</button>
-		<button onclick="reloadData(9);">~800,000 records</button>
-		<button onclick="reloadData(10);">~1.6M records</button>
-		<label id='lblRecords' style=""></label>
-	</div>
-    <div id="myGrid" style="height: 100%; width: 100%; position: absolute" class="ag-theme-balham"></div>
-</body>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>title</title>
+  </head>
+  <body>
+  	<div>sup</div>
+
+  	<script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
+	<script>
+		console.log('hi')
+		var book = ePub("https://github.com/aledemajo/asmr/raw/master/test.epub");
+		var rendition = book.renderTo("area");
+		rendition.display();
+	</script>
+  </body>
 </html>
