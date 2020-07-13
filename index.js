@@ -12,6 +12,8 @@ var reader = new FileReader();
 // handle uploading the book
 $file.on('change', function(evt) {
 
+	console.log('reading files...')
+
     let files = evt.target.files;
 
     renderEpub(files[0]) //rendering epub file
