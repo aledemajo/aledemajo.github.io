@@ -46,6 +46,8 @@ $file.on('change', async function(evt) {
 
                 if(relativePath == 'OEBPS/content.opf') {
 
+                    console.log(zipEntry)
+
                     zip.file(relativePath).async('string').then(function (data) {
                         // here I need to do something with the opf if I want to render it with my own library
                     })
@@ -94,7 +96,7 @@ async function renderEpub(opf) {
     book = ePub(opf);
 
     // rendition
-    rendition = await book.renderTo('area', {width: '100%', height: 750, flow: "paginated"});
+    rendition = await book.renderTo('area', {method: "continuous", flow: "scrolled-doc", width: '100%', height: 750});
 
     // rendition.hooks.content.register(function (callback, renderer) {
     // window.setTimeout(function () {
