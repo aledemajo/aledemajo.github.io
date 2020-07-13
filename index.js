@@ -10,13 +10,14 @@ let book;
 var reader = new FileReader();
 
 // handle uploading the book
-$file.on('change', function(evt) {
+$file.on('change', async function(evt) {
 
 	console.log('reading files...')
 
     let files = evt.target.files;
 
-    renderEpub(files[0]) //rendering epub file
+    await renderEpub(files[0]) //rendering epub file
+    bindSwipe()
 
     // remove content
     $result.html("");
@@ -124,16 +125,29 @@ $(window).bind('keydown', function(e){
     }
 });
 
+function bindSwipe () {
 
-$(window).on( "swipeleft", function( event ) {
-  rendition.next();
-  console.log('swipe')
-      // remove content
-    $result.html("123");
-});
+    let touchStart = 0;
+    let touchEnd = 0;
 
-$(window).on( "swiperight", function( event ) {
-  rendition.prev();
-      // remove content
-    $result.html("abc");
-});
+    rendition.on('touchstart', event => {
+      touchStart = event.changedTouches[0].screenX;
+    });
+
+
+    rendition.on('touchend', event => {
+
+        touchEnd = event.changedTouches[0].screenX;
+        if (touchStart < touchEnd) {
+            // Swiped Right
+            rendition.prev()
+            console.log('swiped right')
+        }
+        if (touchStart > touchEnd) {
+            // Swiped Left
+            rendition.next()
+            console.log('swiped left')
+        }
+    });
+
+}
