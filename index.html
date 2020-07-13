@@ -1,18 +1,52 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>title</title>
-  </head>
-  <body>
-  	<div>sup</div>
 
-  	<script src="https://cdn.jsdelivr.net/npm/epubjs/dist/epub.min.js"></script>
-	<script>
-		console.log('hi')
-		var book = ePub("https://github.com/aledemajo/asmr/raw/master/test.epub");
-		var rendition = book.renderTo("area");
-		rendition.display();
-	</script>
-  </body>
+<head>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.min.js"></script>
+	<script type="text/javascript" src="js/jszip.min.js"></script>
+	<script type="text/javascript" src="js/turn.min.js"></script>
+	<script type="text/javascript" src="js/epub.js"></script>
+	<meta charset="utf-8">
+	<title>ASMR Reader</title>
+	<link href="./style.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+	<!-- <iframe width="100%" height="2000" src="https://www.youtube.com/embed/tgbNymZ7vqY" allow='autoplay; encrypted-media" allowfullscreen'></iframe> -->
+<!-- 
+	<iframe class="video-background" width="560" height="315" src="https://www.youtube.com/embed/tgbNymZ7vqY?&autoplay=1" frameborder="0" allow="autoplay; encrypted-media"></iframe> -->
+
+	<iframe class="video-background" src="https://www.youtube.com/embed/IvJQTWGP5Fg?&autoplay=1" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
+	<h1>ASMR Reader</h1>
+
+	<div id="book"> 
+		<div id="area"></div>
+	</div>
+
+	<!-- <div id="magazine">
+		<div>1</div>
+		<div>2</div>
+		<div>3</div>
+		<div>4</div>
+		<div>5</div>
+		<div>6</div>
+	</div>
+ -->
+	<h3>Choose a book</h3>
+	
+	<!-- <p id='a' class="note">Note : your browser will process the zip file, don't choose a file too big !</p> -->
+	
+	<input type="file" id="file" name="file"/><br />
+
+	<div id="result_block" class="hidden">
+		<h3>Content :</h3>
+		<div id="result"></div>
+	</div>
+
+	<script src="index.js"></script>
+</body>
+
 </html>
