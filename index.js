@@ -128,8 +128,12 @@ $(window).bind('keydown', function(e){
 $(window).on( "swipeleft", function( event ) {
   rendition.next();
   console.log('swipe')
+      // remove content
+    $result.html("123");
 });
 
 $(window).on( "swiperight", function( event ) {
   rendition.prev();
+      // remove content
+    $result.html("abc");
 });
