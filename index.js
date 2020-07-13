@@ -96,7 +96,7 @@ async function renderEpub(opf) {
     book = ePub(opf);
 
     // rendition
-    rendition = await book.renderTo('area', {method: "continuous", flow: "scrolled-doc", width: '100%', height: 750});
+    rendition = await book.renderTo('area', {method: "continuous", flow: "paginated", width: '100%', height: 750});
 
     // rendition.hooks.content.register(function (callback, renderer) {
     // window.setTimeout(function () {
