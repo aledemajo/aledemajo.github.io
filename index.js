@@ -2,11 +2,34 @@
     CONSTANTS   
 */
 
-const themes = {
-        default: { "body": { "background": "#ffffff", "color": "#000000", "font-family": "Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif", "font-size": "37px", "background-image": "url('https://www.transparenttextures.com/patterns/bedge-grunge.png')"}},
-        eggshell: { "body": { "background": "#f0ead6", "color": "#000000"}},
-        offwhite: { "body": { "background": "#fbfbf8", "color": "#000000"}},
-        dark: { "body": { "background": "#002b36", "color": "#fbfbf8"}},
+let themes = {
+
+    default: { 
+        "body": { 
+            "font-size": "25px",
+            "color": "#000000",
+            "background-color": "#ffffff",
+            "background-image": "url('https://www.transparenttextures.com/patterns/bedge-grunge.png')",
+            "font-family": "Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif",
+        }
+    },
+
+    default_mobile: { 
+        "body": { 
+            "font-size": "35px",
+            "color": "#000000",
+            "background-color": "#ffffff",
+            "background-image": "url('https://www.transparenttextures.com/patterns/bedge-grunge.png')",
+            "font-family": "Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif",
+        }
+    },
+
+    dark: { 
+        "body": { 
+            "background": "#002b36", 
+            "color": "#fbfbf8"
+        }
+    },
 }
 
 // EpubJS rendition object
@@ -46,12 +69,9 @@ async function renderEpub(opf) {
     console.log('epub rendered...')
 
     rendition.themes.register('default', themes.default);
-    rendition.themes.register('eggshell', themes.eggshell);
-    rendition.themes.register('offwhite', themes.offwhite);
     rendition.themes.register('dark', themes.dark);
 
     rendition.themes.select('default')
-
 
     rendition.hooks.render.register(function (contents, view) {
         console.log('rendition hook fired: rendition.hooks.render')
@@ -105,4 +125,10 @@ function bindSwipe () {
             rendition.next()
         }
     });
+}
+
+// apply mobile theme if needed
+if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
+    // some code..
+    rendition.themes.select('default_mobile')
 }

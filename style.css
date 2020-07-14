@@ -6,9 +6,7 @@ body{
   display: flex;
   flex-flow: column;
   justify-content: center;
-  /*background: lightgrey;*/
   height: 90vh;
-  /*flex: 1 1 auto;*/
 }
 
 .header {
@@ -17,13 +15,12 @@ body{
 
 .footer {
   flex: 1 1 auto;
-  /*background: orange; */
+  background: orange; 
   align-self: center;
 }
 
 .fbook {
   flex: 10  10 auto; 
-  /*background: orange;*/
   scroll-behavior: smooth;
   padding-top: 10%;
   padding-bottom: 10%;
