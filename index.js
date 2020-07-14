@@ -1,11 +1,19 @@
-// EpubJS rendition
+/*
+    CONSTANTS   
+*/
+
+const themes = {
+        default: { "body": { "background": "#ffffff", "color": "#000000", "font-family": "Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif", "font-size": "45px"}},
+        eggshell: { "body": { "background": "#f0ead6", "color": "#000000"}},
+        offwhite: { "body": { "background": "#fbfbf8", "color": "#000000"}},
+        dark: { "body": { "background": "#002b36", "color": "#fbfbf8"}},
+}
+
+// EpubJS rendition object
 let rendition;
 
-// HTML element for rendering
+// HTML element for rendering book
 let book;
-
-// Optional HTML tag to display statistics. TODO: remove
-var $result = $("#result");
 
 // jszip file reader
 var reader = new FileReader();
@@ -24,40 +32,6 @@ $file.on('change', async function(evt) {
 
     bindSwipe()
     bindKeys()
-
-    // // remove content
-    // $result.html("");
-    // // be sure to show the results
-    // $("#result_block").removeClass("hidden").addClass("show");
-
-    // // Closure to capture the file information.
-    // function handleFile(file) {
-    //     JSZip.loadAsync(file).then(function(zip) {
-
-    //         zip.forEach(function (relativePath, zipEntry) {
-
-    //             if(relativePath == 'OEBPS/content.opf') {
-
-    //                 console.log(zipEntry)
-
-    //                 zip.file(relativePath).async('string').then(function (data) {
-    //                     // here I need to do something with the opf if I want to render it with my own library
-    //                 })
-
-    //                 zipEntry.async("string").then(function (content) {
-    //                     // you can use the content of the OPF file here
-    //                 });
-
-    //             }
-    //         });
-    //     }, function (e) {
-    //         console.log('error reading file: ' + e)
-    //     });
-    // }
-
-    // for (var i = 0; i < files.length; i++) {
-    //     handleFile(files[i]);
-    // }
 });
 
 // render epub
@@ -68,6 +42,13 @@ async function renderEpub(opf) {
 
     // rendition
     rendition = await book.renderTo('area', { flow: "paginated", width: '100%', height: '1800'});
+
+    rendition.themes.register('default', themes.default);
+    rendition.themes.register('eggshell', themes.eggshell);
+    rendition.themes.register('offwhite', themes.offwhite);
+    rendition.themes.register('dark', themes.dark);
+
+    rendition.themes.select('default')
 
 
     rendition.hooks.render.register(function (contents, view) {
@@ -86,21 +67,20 @@ async function renderEpub(opf) {
     let displayed = await rendition.display();
 }
 
+// handle key presses
 function bindKeys() {
-    // handle key presses
     $(window).bind('keydown', function(e){
         
         if (e.keyCode == 37) {
-            // $('#magazine').turn('previous');
             rendition.prev();
         }
         else if (e.keyCode == 39) {
-            // $('#magazine').turn('next');
             rendition.next();
         }
     });
 }
 
+// handle swipe actions
 function bindSwipe () {
 
     let touchStart = 0;
@@ -114,15 +94,13 @@ function bindSwipe () {
     rendition.on('touchend', event => {
 
         touchEnd = event.changedTouches[0].screenX;
-        if (touchStart < touchEnd) {
-            // Swiped Right
+
+        if (touchStart < touchEnd) { // Swipe right
             rendition.prev()
-            console.log('swiped right')
         }
-        if (touchStart > touchEnd) {
-            // Swiped Left
+
+        if (touchStart > touchEnd) { // Swipe left
             rendition.next()
-            console.log('swiped left')
         }
     });
 }
