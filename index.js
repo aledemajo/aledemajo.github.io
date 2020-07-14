@@ -131,7 +131,7 @@ function bindSwipe () {
 // apply mobile theme if needed
 if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
     // some code..
-    rendition.themes.select('default_mobile')
+    // rendition.themes.select('default_mobile')
 }
 
 setupVideo()
