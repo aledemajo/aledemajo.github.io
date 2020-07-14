@@ -1,6 +1,5 @@
 body{
-	/*background:#ccc;*/
-	scroll-behaviour: smooth;
+	scroll-behavior: smooth;
 }
 
 #magazine{
@@ -18,11 +17,10 @@ body{
 }
 
 #book{
-	height: 750px;
+	height: 1800px;
 	width: 70%;
-/*     overflow: auto; */
-    margin: 0 auto;
-    /*border: 5px inset;*/
+  margin: 0 auto;
+  scroll-behavior: smooth;
 }
 
 

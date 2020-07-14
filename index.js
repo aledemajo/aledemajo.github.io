@@ -1,13 +1,17 @@
+// EpubJS rendition
 let rendition;
 
-var $result = $("#result");
-
-var $file = $("#file")
-
+// HTML element for rendering
 let book;
+
+// Optional HTML tag to display statistics. TODO: remove
+var $result = $("#result");
 
 // jszip file reader
 var reader = new FileReader();
+
+// File uploaded by end user
+var $file = $("#file")
 
 // handle uploading the book
 $file.on('change', async function(evt) {
@@ -17,77 +21,44 @@ $file.on('change', async function(evt) {
     let files = evt.target.files;
 
     await renderEpub(files[0]) //rendering epub file
+
     bindSwipe()
+    bindKeys()
 
-    // remove content
-    $result.html("");
-    // be sure to show the results
-    $("#result_block").removeClass("hidden").addClass("show");
+    // // remove content
+    // $result.html("");
+    // // be sure to show the results
+    // $("#result_block").removeClass("hidden").addClass("show");
 
-    // Closure to capture the file information.
-    function handleFile(f) {
-        var $title = $("<h4>", {
-            text : f.name
-        });
-        var $fileContent = $("<ul>");
-        $result.append($title);
-        $result.append($fileContent);
+    // // Closure to capture the file information.
+    // function handleFile(file) {
+    //     JSZip.loadAsync(file).then(function(zip) {
 
-        var dateBefore = new Date();
-        JSZip.loadAsync(f)                                   // 1) read the Blob
-        .then(function(zip) {
-            var dateAfter = new Date();
-            $title.append($("<span>", {
-                "class": "small",
-                text:" (loaded in " + (dateAfter - dateBefore) + "ms)"
-            }));
+    //         zip.forEach(function (relativePath, zipEntry) {
 
-            zip.forEach(function (relativePath, zipEntry) {  // 2) print entries
+    //             if(relativePath == 'OEBPS/content.opf') {
 
-                if(relativePath == 'OEBPS/content.opf') {
+    //                 console.log(zipEntry)
 
-                    console.log(zipEntry)
+    //                 zip.file(relativePath).async('string').then(function (data) {
+    //                     // here I need to do something with the opf if I want to render it with my own library
+    //                 })
 
-                    zip.file(relativePath).async('string').then(function (data) {
-                        // here I need to do something with the opf if I want to render it with my own library
-                    })
+    //                 zipEntry.async("string").then(function (content) {
+    //                     // you can use the content of the OPF file here
+    //                 });
 
-                    zipEntry.async("string").then(function (content) {
-                    });
+    //             }
+    //         });
+    //     }, function (e) {
+    //         console.log('error reading file: ' + e)
+    //     });
+    // }
 
-                }
-
-                $fileContent.append($("<li>", {
-                    text : zipEntry.name
-                }));
-            });
-        }, function (e) {
-            $result.append($("<div>", {
-                "class" : "alert alert-danger",
-                text : "Error reading " + f.name + ": " + e.message
-            }));
-        });
-    }
-
-    for (var i = 0; i < files.length; i++) {
-        handleFile(files[i]);
-    }
+    // for (var i = 0; i < files.length; i++) {
+    //     handleFile(files[i]);
+    // }
 });
-
-// render the book
-// $(window).ready(function() {
-//     $('#magazine').turn({
-//                         display: 'double',
-//                         acceleration: true,
-//                         gradients: true,
-//                         elevation:50,
-//                         when: {
-//                             turned: function(e, page) {
-//                                 console.log('Current view: ', $(this).turn('view'));
-//                             }
-//                         }
-//                     });
-// });
 
 // render epub
 async function renderEpub(opf) {
@@ -96,36 +67,39 @@ async function renderEpub(opf) {
     book = ePub(opf);
 
     // rendition
-    rendition = await book.renderTo('area', {method: "continuous", flow: "paginated", width: '100%', height: 750});
+    rendition = await book.renderTo('area', { flow: "paginated", width: '100%', height: '1800'});
 
-    // rendition.hooks.content.register(function (callback, renderer) {
-    // window.setTimeout(function () {
-    //     var style = renderer.doc.createElement("style");
-    //     style.innerHTML = "*{-webkit-transition: transform {t} ease;-moz-transition: tranform {t} ease;-o-transition: transform {t} ease;-ms-transition: transform {t} ease;transition: transform {t} ease;}";
-    //     style.innerHTML = style.innerHTML.split("{t}").join("0.5s");
-    //     renderer.doc.body.appendChild(style);
-    // }, 100)
-    // if (callback) {
-    //     callback();
-    // }
-    //     });
+
+    rendition.hooks.render.register(function (contents, view) {
+        console.log('rendition hook fired: rendition.hooks.render')
+    });
+
+    rendition.hooks.content.register(function (contents, view) {
+        console.log('rendition hook fired: rendition.hooks.content')
+    });
+
+    book.spine.hooks.content.register(function (contents, view) {
+        console.log('book hook fired: book.spine.hooks.content')
+    });
 
     // get display
     let displayed = await rendition.display();
 }
 
-// handle key presses
-$(window).bind('keydown', function(e){
-    
-    if (e.keyCode == 37) {
-        // $('#magazine').turn('previous');
-        rendition.prev();
-    }
-    else if (e.keyCode == 39) {
-        // $('#magazine').turn('next');
-        rendition.next();
-    }
-});
+function bindKeys() {
+    // handle key presses
+    $(window).bind('keydown', function(e){
+        
+        if (e.keyCode == 37) {
+            // $('#magazine').turn('previous');
+            rendition.prev();
+        }
+        else if (e.keyCode == 39) {
+            // $('#magazine').turn('next');
+            rendition.next();
+        }
+    });
+}
 
 function bindSwipe () {
 
@@ -151,5 +125,4 @@ function bindSwipe () {
             console.log('swiped left')
         }
     });
-
 }
