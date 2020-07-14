@@ -156,13 +156,10 @@ function onPlayerStateChange(event) {
     console.log('player state change: ')
     console.log(event)
 
-    if(event.data == -1)
-        // player.playVideo()
-
     if (event.data == YT.PlayerState.PLAYING) {
         console.log('playing!')
         console.log('unmuting...')
-        player.unMute()
+        // player.unMute()
         console.log('unmuted!')
       // setTimeout(stopVideo, 6000);
       // done = true;
@@ -190,7 +187,10 @@ function onYouTubeIframeAPIReady() {
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
     console.log('player ready, playing video...')
-    // event.target.playVideo();
+    event.target.setVolume(0);
+    event.target.playVideo();
+    event.target.setVolume(10);
+
     console.log('video played!')
 }
 
@@ -198,5 +198,5 @@ document.body.addEventListener('click', go, true);
 
 function go() {
     console.log('forcing video play...');
-    // player.playVideo();
+    player.playVideo();
 } 
