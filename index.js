@@ -190,5 +190,5 @@ document.body.addEventListener('click', go, true);
 
 function go() {
     console.log('forcing video play...');
-    event.target.playVideo();
+    player.playVideo();
 } 
