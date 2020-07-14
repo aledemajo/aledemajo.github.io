@@ -3,7 +3,7 @@
 */
 
 const themes = {
-        default: { "body": { "background": "#ffffff", "color": "#000000", "font-family": "Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif", "font-size": "37px"}},
+        default: { "body": { "background": "#fbfbf8", "color": "#000000", "font-family": "Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif", "font-size": "37px"}},
         eggshell: { "body": { "background": "#f0ead6", "color": "#000000"}},
         offwhite: { "body": { "background": "#fbfbf8", "color": "#000000"}},
         dark: { "body": { "background": "#002b36", "color": "#fbfbf8"}},
@@ -41,7 +41,7 @@ async function renderEpub(opf) {
     book = ePub(opf);
 
     // rendition
-    rendition = await book.renderTo('area', { flow: "paginated", width: '100%', height: '80vh'});
+    rendition = await book.renderTo('area', { flow: "paginated", width: '100%', height: '70vh'});
 
     console.log('epub rendered...')
 

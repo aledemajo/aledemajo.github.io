@@ -7,7 +7,7 @@ body{
   flex-flow: column;
   justify-content: center;
   /*background: lightgrey;*/
-  height: 99vh;
+  height: 90vh;
   /*flex: 1 1 auto;*/
 }
 
@@ -18,6 +18,7 @@ body{
 .footer {
   flex: 1 1 auto;
   /*background: orange; */
+  align-self: center;
 }
 
 .fbook {
@@ -38,7 +39,6 @@ body{
 	/*width: 70%;*/
   margin: 0 auto;
   scroll-behavior: smooth;
-  background-color: white;
 }
 
 .video-background {
@@ -46,17 +46,7 @@ body{
   position: fixed;
   top: 0; right: 0; bottom: 0; left: 0;
   z-index: -99;
-  width: 100%;
-  height: 100%;
-  filter: blur(2px);
-}
-
-.video-foreground,
-.video-background iframe {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
+  width: 100vw;
+  height: 100vh;
+  filter: blur(0px);
 }
