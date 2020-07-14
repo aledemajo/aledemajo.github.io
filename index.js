@@ -147,8 +147,6 @@ var player;
 
 var done = false;
 
-func
-
 // 5. The API calls this function when the player's state changes.
 //    The function indicates that when playing a video (state=1),
 //    the player should play for six seconds and then stop.
@@ -187,3 +185,10 @@ function onPlayerReady(event) {
     event.target.playVideo();
     console.log('video played!')
 }
+
+document.body.addEventListener('click', go, true);
+
+function go() {
+    console.log('forcing video play...');
+    event.target.playVideo();
+} 
