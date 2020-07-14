@@ -41,7 +41,9 @@ async function renderEpub(opf) {
     book = ePub(opf);
 
     // rendition
-    rendition = await book.renderTo('area', { flow: "paginated", width: '100%', height: '1800'});
+    rendition = await book.renderTo('area', { flow: "paginated", width: '100%', height: '80vh'});
+
+    console.log('epub rendered...')
 
     rendition.themes.register('default', themes.default);
     rendition.themes.register('eggshell', themes.eggshell);

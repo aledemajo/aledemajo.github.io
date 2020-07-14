@@ -2,28 +2,44 @@ body{
 	scroll-behavior: smooth;
 }
 
-#magazine{
-	width:1152px;
-	height:500px;
-	background-color:#fffff8;
+.container {
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  /*background: lightgrey;*/
+  height: 99vh;
+  /*flex: 1 1 auto;*/
 }
 
-#magazine .turn-page{
-	background-color:#fffff4;
-	background-size:100% 100%;
-	border-style: solid;
-	border-width: 1px;
-	border-color: #e5e5d9;
+.header {
+  flex: 1 1 auto;
+}
+
+.footer {
+  flex: 1 1 auto;
+  /*background: orange; */
+}
+
+.fbook {
+  flex: 10  10 auto; 
+  /*background: orange;*/
+  scroll-behavior: smooth;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  padding-right: 10%;
+  padding-left: 10%;
+}
+
+.sidebar {
+
 }
 
 #book{
-	height: 1800px;
-	width: 70%;
+	/*width: 70%;*/
   margin: 0 auto;
   scroll-behavior: smooth;
   background-color: white;
 }
-
 
 .video-background {
   background: #000;
