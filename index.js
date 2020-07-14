@@ -3,7 +3,7 @@
 */
 
 const themes = {
-        default: { "body": { "background": "#fbfbf8", "color": "#000000", "font-family": "Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif", "font-size": "37px"}},
+        default: { "body": { "background": "#ffffff", "color": "#000000", "font-family": "Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif", "font-size": "37px", "background-image": "url('https://www.transparenttextures.com/patterns/bedge-grunge.png')"}},
         eggshell: { "body": { "background": "#f0ead6", "color": "#000000"}},
         offwhite: { "body": { "background": "#fbfbf8", "color": "#000000"}},
         dark: { "body": { "background": "#002b36", "color": "#fbfbf8"}},
