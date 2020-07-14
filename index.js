@@ -70,6 +70,7 @@ async function renderEpub(opf) {
 
     rendition.themes.register('default', themes.default);
     rendition.themes.register('dark', themes.dark);
+    rendition.themes.register('default_mobile', themes.default_mobile)
 
     rendition.themes.select('default')
 
@@ -151,6 +152,13 @@ var done = false;
 //    The function indicates that when playing a video (state=1),
 //    the player should play for six seconds and then stop.
 function onPlayerStateChange(event) {
+
+    console.log('player state change: ')
+    console.log(event)
+
+    if(event.data == -1)
+        // player.playVideo()
+
     if (event.data == YT.PlayerState.PLAYING) {
         console.log('playing!')
         console.log('unmuting...')
@@ -182,7 +190,7 @@ function onYouTubeIframeAPIReady() {
 // 4. The API will call this function when the video player is ready.
 function onPlayerReady(event) {
     console.log('player ready, playing video...')
-    event.target.playVideo();
+    // event.target.playVideo();
     console.log('video played!')
 }
 
@@ -190,5 +198,5 @@ document.body.addEventListener('click', go, true);
 
 function go() {
     console.log('forcing video play...');
-    player.playVideo();
+    // player.playVideo();
 } 
