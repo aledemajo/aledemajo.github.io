@@ -456,10 +456,10 @@ App.prototype.applyTheme = function () {
         },
         "img": {
             "max-width": "100% !important",
-            "transition": "transform .5s ease-in-out !important",
+            // "transition": "transform .5s ease-in-out !important",
         },
         "img:hover": {
-            "transform": "scale(1.3) translate(0%, 15%)",
+            // "transform": "scale(1.3) translate(0%, 15%)",
             // "transform": "translate(-50%, -50%)",
             // "transform": "translate(-50%, -50%);"
             // "transform": "rotate(-30deg)",
