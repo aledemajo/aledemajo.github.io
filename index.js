@@ -97,8 +97,6 @@ if (mobile) {
     rendition.themes.register('dark', themes.dark);
     rendition.themes.register('default_mobile', themes.default_mobile)
 
-    rendition.stylesheet = 'bookstyle.css'
-
     rendition.hooks.render.register(function (contents, view) {
         console.log('rendition hook fired: rendition.hooks.render')
     });
