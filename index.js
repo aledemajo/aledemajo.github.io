@@ -11,17 +11,19 @@ let themes = {
         "body": { 
             "font-size": "20px",
             "color": "#000000",
-            "background-color": "#ffffff",
-            "background-image": "url('https://www.transparenttextures.com/patterns/bedge-grunge.png')",
+            // "background-color": "#ffffff",
+            // "background-image": "url('https://www.transparenttextures.com/patterns/bedge-grunge.png')",
             "font-family": "Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif",
         },
-        "section": {
+        "p": {
+
+        },
+        "img": {
             "transition": "transform 1s ease-in-out",
         },
-        "section:hover": {
-            "transform": "rotate(90deg)",
-            "transform": "rotate(-30deg)",
-        }
+        "img:hover": {
+             "transform": "scale(1.8)",
+        },
     },
 
     default_mobile: { 
@@ -41,6 +43,8 @@ let themes = {
         }
     },
 }
+
+let mobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent);
 
 // EpubJS rendition object
 let rendition;
@@ -74,9 +78,17 @@ async function renderEpub(opf) {
     book = ePub(opf);
 
     // rendition
-    // rendition = await book.renderTo('area', { flow: "paginated", width: '100%', height: '70vh'});
 
+    // apply mobile theme if needed
+if (mobile) {
+    // some code..
     rendition = await book.renderTo('area', { flow: "scrolled", manager: "continuous", snap: true, width: '100%', height: '70vh'});
+    // rendition.themes.select('default_mobile')
+} else {
+    rendition = await book.renderTo('area', { flow: "paginated", width: '100%', height: '70vh'});
+}
+
+    // rendition = await book.renderTo('area', { flow: "scrolled", manager: "continuous", snap: true, width: '100%', height: '70vh'});
 
     console.log('epub rendered...')
     console.log(rendition)
@@ -84,6 +96,8 @@ async function renderEpub(opf) {
     rendition.themes.register('default', themes.default);
     rendition.themes.register('dark', themes.dark);
     rendition.themes.register('default_mobile', themes.default_mobile)
+
+    rendition.stylesheet = 'bookstyle.css'
 
     rendition.hooks.render.register(function (contents, view) {
         console.log('rendition hook fired: rendition.hooks.render')
@@ -142,12 +156,6 @@ function bindSwipe () {
             rendition.next()
         }
     });
-}
-
-// apply mobile theme if needed
-if( /Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent) ) {
-    // some code..
-    // rendition.themes.select('default_mobile')
 }
 
 setupVideo()
