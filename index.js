@@ -5,12 +5,22 @@
 let themes = {
 
     default: { 
+        "html": {
+            "scroll-behavior": "smooth",
+        },
         "body": { 
-            "font-size": "25px",
+            "font-size": "20px",
             "color": "#000000",
             "background-color": "#ffffff",
             "background-image": "url('https://www.transparenttextures.com/patterns/bedge-grunge.png')",
             "font-family": "Baskerville,Baskerville Old Face,Hoefler Text,Garamond,Times New Roman,serif",
+        },
+        "section": {
+            "transition": "transform 1s ease-in-out",
+        },
+        "section:hover": {
+            "transform": "rotate(90deg)",
+            "transform": "rotate(-30deg)",
         }
     },
 
@@ -53,7 +63,7 @@ $file.on('change', async function(evt) {
 
     await renderEpub(files[0]) //rendering epub file
 
-    bindSwipe()
+    // bindSwipe()
     bindKeys()
 });
 
@@ -64,15 +74,16 @@ async function renderEpub(opf) {
     book = ePub(opf);
 
     // rendition
-    rendition = await book.renderTo('area', { flow: "paginated", width: '100%', height: '70vh'});
+    // rendition = await book.renderTo('area', { flow: "paginated", width: '100%', height: '70vh'});
+
+    rendition = await book.renderTo('area', { flow: "scrolled", manager: "continuous", snap: true, width: '100%', height: '70vh'});
 
     console.log('epub rendered...')
+    console.log(rendition)
 
     rendition.themes.register('default', themes.default);
     rendition.themes.register('dark', themes.dark);
     rendition.themes.register('default_mobile', themes.default_mobile)
-
-    rendition.themes.select('default')
 
     rendition.hooks.render.register(function (contents, view) {
         console.log('rendition hook fired: rendition.hooks.render')
@@ -88,6 +99,9 @@ async function renderEpub(opf) {
 
     // get display
     let displayed = await rendition.display();
+
+
+    rendition.themes.select('default')
 }
 
 // handle key presses
@@ -95,9 +109,11 @@ function bindKeys() {
     $(window).bind('keydown', function(e){
         
         if (e.keyCode == 37) {
+            rendition.themes.select('default')
             rendition.prev();
         }
         else if (e.keyCode == 39) {
+            // rendition.themes.select('dark')
             rendition.next();
         }
     });
@@ -189,9 +205,7 @@ function onPlayerReady(event) {
     console.log('player ready, playing video...')
     event.target.setVolume(0);
     event.target.playVideo();
-    event.target.setVolume(10);
-
-    console.log('video played!')
+    event.target.setVolume(50);
 }
 
 document.body.addEventListener('click', go, true);

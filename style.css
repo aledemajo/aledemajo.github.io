@@ -47,3 +47,16 @@ body{
   height: 100vh;
   filter: blur(0px);
 }
+
+
+
+.square {
+  background-color: blue;
+  width: 100px;
+  height: 100px;
+  transition: transform 1s ease-in-out;
+}
+.square:hover {
+  transform: rotate(90deg);
+  transform: rotate(-30deg);
+}
