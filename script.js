@@ -672,7 +672,7 @@ App.prototype.doDictionary = function (word) {
 
 App.prototype.doFullscreen = () => {
     document.fullscreenEnabled = document.fullscreenEnabled || document.mozFullScreenEnabled || document.documentElement.webkitRequestFullScreen;
-
+    let book = document.getElementById('app').style.border = "solid 0px";
     let requestFullscreen = element => {
         if (element.requestFullscreen) {
             element.requestFullscreen();
