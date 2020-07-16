@@ -8,13 +8,42 @@
   background: #000;
   position: fixed;
   top: 0; right: 0; bottom: 0; left: 0;
-  z-index: -99;
+  z-index: -99999;
   width: 100vw;
   height: 100vh;
   filter: blur(0px);
 }
 
+.welcome {
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  background-color: #FCF2D8;
+  color: black;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.parent {
+  display: flex;
+  height: 100vh; /* Or whatever */
+  background-color: black;
+}
+
+.child {
+  opacity: 0;
+  word-wrap: break-word;
+  background-color: grey;
+  width: 50vw;  /* Or whatever */
+  height: 70vh; /* Or whatever */
+  margin: auto;  /* Magic! */
+  /*align-content: center;*/
+}
+
 .app {
+    z-index: -999;
     display: -webkit-flex;
     display: flex;
     -webkit-flex-direction: column;

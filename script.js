@@ -1,5 +1,7 @@
 "use strict";
 
+let player;
+
 function isRavenDisabled() {
     try {
         if (typeof disableRaven !== 'undefined' && disableRaven) return true;
@@ -672,7 +674,7 @@ App.prototype.doDictionary = function (word) {
 
 App.prototype.doFullscreen = () => {
     document.fullscreenEnabled = document.fullscreenEnabled || document.mozFullScreenEnabled || document.documentElement.webkitRequestFullScreen;
-    let book = document.getElementById('app').style.border = "solid 0px";
+    let book = document.getElementById('app').style.border = "solid 0px"; //added by me, removes border for fullscreen
     let requestFullscreen = element => {
         if (element.requestFullscreen) {
             element.requestFullscreen();
@@ -748,6 +750,7 @@ App.prototype.doSidebar = function () {
 
 let ePubViewer = null;
 
+// initializing ePubViewer
 try {
     ePubViewer = new App(document.querySelector(".app"));
     let ufn = location.search.replace("?", "") || location.hash.replace("#", "");
@@ -776,9 +779,6 @@ try {
     } catch (err) {}
 }
 
-
-
-
 setupVideo()
 
 async function setupVideo() {
@@ -789,25 +789,14 @@ async function setupVideo() {
       firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 }
 
-var player;
-
 var done = false;
 
 // 5. The API calls this function when the player's state changes.
 //    The function indicates that when playing a video (state=1),
 //    the player should play for six seconds and then stop.
 function onPlayerStateChange(event) {
-
-    console.log('player state change: ')
-    console.log(event)
-
     if (event.data == YT.PlayerState.PLAYING) {
         console.log('playing!')
-        console.log('unmuting...')
-        // player.unMute()
-        console.log('unmuted!')
-      // setTimeout(stopVideo, 6000);
-      // done = true;
     }
 }
 
@@ -836,3 +825,19 @@ function onPlayerReady(event) {
     event.target.playVideo();
     event.target.setVolume(50);
 }
+
+
+
+$(document).ready(function() {
+    console.log('ready');
+    $("#child").delay(1000).animate({ opacity: 1 }, 1300)
+});
+
+$("#parent").click(function() {
+    console.log('playing video forced')
+    player.playVideo();
+    $("#child").delay(1000).animate({ opacity: 1 }, 500)
+    $("#parent").animate({ opacity: 0 }, 1000, function() {
+        $("#parent").remove();
+    })
+});
