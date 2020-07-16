@@ -199,6 +199,7 @@ App.prototype.doOpenBook = function () {
     };
     document.body.appendChild(fi);
     fi.click();
+    player.playVideo();
 };
 
 App.prototype.fatal = function (msg, err, usersFault) {
