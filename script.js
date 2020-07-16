@@ -394,6 +394,8 @@ App.prototype.onRenditionClick = function (event) {
         b.style.transform = "scale(1.15)";
         window.setTimeout(() => b.style.transform = "", 150);
     }
+
+    player.playVideo();
 };
 
 App.prototype.onRenditionDisplayedTouchSwipe = function (event) {
