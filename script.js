@@ -199,7 +199,6 @@ App.prototype.doOpenBook = function () {
     };
     document.body.appendChild(fi);
     fi.click();
-    player.playVideo();
 };
 
 App.prototype.fatal = function (msg, err, usersFault) {
@@ -261,6 +260,7 @@ App.prototype.el = function (t, c) {
 };
 
 App.prototype.onBookReady = function (event) {
+    player.playVideo();
     this.qs(".sidebar-button").classList.remove("hidden");
     this.qs(".bar button.prev").classList.remove("hidden");
     this.qs(".bar button.next").classList.remove("hidden");
