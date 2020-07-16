@@ -33,13 +33,18 @@
 }
 
 .child {
+  font-family: 'Open Sans', sans-serif;
+  color: lightgrey;
+  display: flex;
+  flex-direction: column;
   opacity: 0;
   word-wrap: break-word;
-  background-color: grey;
-  width: 50vw;  /* Or whatever */
-  height: 70vh; /* Or whatever */
+  /*background-color: grey;*/
+  width: 70vw;  /* Or whatever */
+  height: 90vh; /* Or whatever */
   margin: auto;  /* Magic! */
-  /*align-content: center;*/
+  justify-content: space-around;
+  align-items: center;
 }
 
 .app {

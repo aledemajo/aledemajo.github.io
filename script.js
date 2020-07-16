@@ -827,6 +827,7 @@ function onPlayerReady(event) {
 }
 
 
+// Welcome screen animation
 
 $(document).ready(function() {
     console.log('ready');
@@ -836,7 +837,7 @@ $(document).ready(function() {
 $("#parent").click(function() {
     console.log('playing video forced')
     player.playVideo();
-    $("#child").delay(1000).animate({ opacity: 1 }, 500)
+    $("#child").delay(1000).animate({ opacity: 1 }, 1000)
     $("#parent").animate({ opacity: 0 }, 1000, function() {
         $("#parent").remove();
     })
