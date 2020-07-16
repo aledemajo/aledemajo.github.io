@@ -33,7 +33,9 @@
 }
 
 .child {
-  font-family: 'Open Sans', sans-serif;
+  /*font-family: 'Open Sans', sans-serif;*/
+  font-family: 'Roboto', sans-serif;
+  font-size: 25px;
   color: lightgrey;
   display: flex;
   flex-direction: column;
