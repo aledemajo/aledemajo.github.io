@@ -22,9 +22,9 @@
 
 	<div class="parent" id="parent">
 		<div class="child" id="child">
-			<h2>ASMR e-books</h2>
+			<h2>Ambiance Reader</h2>
 			<div>Choose a relaxing ambiance</div>
-			<div>Read your favoirte book</div>
+			<div>Read your favorite book</div>
 			<small>tap anywhere to start</small>
 		</div>
 	</div>
@@ -35,6 +35,7 @@
         </div>
         <div class="sidebar-wrapper out">
             <div class="sidebar">
+
                 <div class="tab-list">
                     <a data-tab="toc" class="item">
                         <i class="icon material-icons-outlined">list</i>
@@ -49,10 +50,18 @@
                         <i class="icon material-icons-outlined">settings</i>
                     </a>
                 </div>
+
+
                 <div class="tab-container">
+
+
+
                     <div class="tab" data-tab="toc">
                         <div class="toc-list"></div>
                     </div>
+
+
+
                     <div class="tab search" data-tab="search">
                         <div class="search-bar">
                             <input type="text" autocomplete="off" placeholder="Search book..." class="search-box">
@@ -62,6 +71,7 @@
                         </div>
                         <div class="search-results"></div>
                     </div>
+
                     <div class="tab info" data-tab="info">
                         <div class="cover-wrapper">
                             <img src="" alt="" class="cover">
@@ -75,7 +85,36 @@
                         <div class="author"></div>
                         <div class="description"></div>
                     </div>
+
+
                     <div class="tab settings" data-tab="settings">
+                        <div class="setting">
+                            <div class="setting-label">Ambiance</div>
+                            <div class="setting-content">
+                                <ul class="list-group">
+
+                                	<li id="vidFireplace">Fireplace<br />
+                                	   <small>thunder & rain, crackling fireplace</small>
+                                    </li>
+                                    <br />
+                                	<li id="vidJungle">Jungle<br />
+                                        <small>water, crickets, frogs</small>
+                                    </li>
+                                    <br />
+                                	<li id="vidTrain">Train<br />
+                                        <small>trains, rain</small>
+                                    </li>
+                                    <br />
+                                	<li id="vidSpa">Spa<br />
+                                        <small>soothing water</small>
+                                    </li>
+                                    <br />
+                                	<li id="vidLibrary">Library<br />
+                                        <small>howling wind, thunder</small>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>            
                         <div class="setting">
                             <div class="setting-label">Themes</div>
                             <div class="setting-content theme chips" data-chips="theme">
@@ -150,12 +189,12 @@
                                 <div class="chip" data-value="none" data-default="true">None</div>
                             </div>
                         </div>
-                        <div class="setting">
+<!--                         <div class="setting">
                             <div class="setting-label">Fullscreen</div>
                             <div class="setting-content">
                                 <a href="javascript:ePubViewer.doFullscreen();">Fullscreen</a>
                             </div>
-                        </div>
+                        </div> -->
                         <div class="setting">
                             <div class="setting-label">Reset</div>
                             <div class="setting-content">
@@ -165,17 +204,25 @@
                         <div class="setting">
                             <div class="setting-label">About</div>
                             <div class="setting-content">
-                                ePubViewer v3.1.0
-                                <br /> Copyright 2019
-                                <a href="https://pgaskin.net">Patrick Gaskin</a>
+                                Ambiance Reader v0.1
+                                <br /> made with ❤️
+                                <br /> by <a href="https://github.com/aledemajo">Alejandro de Majo</a>
                                 <br />
-                                <a href="https://github.com/pgaskin/ePubViewer">Code</a> |
-                                <a href="https://github.com/pgaskin/ePubViewer/issues">Report an issue</a>
                                 <br />
-                                <br /> This app requires Microsoft Edge 15+, Mozilla Firefox 50+, Chrome 50+, or Safari 10+.
+                                <br />
+                                <small>All video content produced by <a href="https://www.youtube.com/channel/UC-gjtyoUTzGEwWM5Y1J4J7Q">New Bliss</a></small>
+                                <br />
+                                <br />
+                                <small>Ambiance Reader uses <small><a href="https://github.com/pgaskin/ePubViewer">ePubViewer v3.1.0</a></small>, an open source e-reader written by Patrick Gaskin.</small>
+                                <small>Copyright information below</small>
+                                <br />
+                                <small><a href="https://github.com/pgaskin/ePubViewer">ePubViewer v3.1.0</a></small>
+                                <small><a href="https://pgaskin.net">Patrick Gaskin</a></small>
                             </div>
                         </div>
                     </div>
+
+
                 </div>
             </div>
         </div>
@@ -185,6 +232,7 @@
             <div class="error-info"></div>
             <div class="error-dump"></div>
         </div>
+
         <div class="bar">
             <div class="left">
                 <button class="open">
@@ -202,6 +250,7 @@
                 </button>
             </div>
         </div>
+
         <div class="book">
             <div class="empty-wrapper">
                 <div class="empty">
@@ -214,6 +263,7 @@
                 </div>
             </div>
         </div>
+
         <div class="bar">
             <div class="left">
                 <button class="prev hidden">
@@ -227,6 +277,7 @@
                 </button>
             </div>
         </div>
+
     </div>
 
     <div id="player"></div>
@@ -239,25 +290,6 @@
         }
         if (isIE()) alert("ePubViewer does not support Internet Explorer. Please use Chrome or Firefox.");
     </script>
-
-    <script>
-        if ('serviceWorker' in navigator) window.addEventListener('load', () => {
-            navigator.serviceWorker.register('sw.js').then(reg => {
-                reg.onupdatefound = () => {
-                    const installingWorker = reg.installing;
-                    installingWorker.onstatechange = () => {
-                        if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            location.reload();
-                        }
-                    };
-                };
-            })
-        });
-        try {
-            window.caches.keys().then(keys => console.log("caches: " + keys.join(", "))).catch(err => console.log("error checking cache version"));
-        } catch (err) { }
-    </script>
-
     <script src="polyfills/babel-polyfill.min.js"></script>
     <script src="polyfills/fetch.js"></script>
     <script src="polyfills/pep.min.js"></script>
@@ -266,16 +298,6 @@
     <script src="libs/epub.js"></script>
 
     <script src="script.js"></script>
-
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-66226417-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-            dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-        gtag('config', 'UA-66226417-1');
-    </script>
 </body>
 
 </html>

@@ -352,13 +352,34 @@ App.prototype.onBookCoverLoaded = function (url) {
 App.prototype.onKeyUp = function (event) {
     let kc = event.keyCode || event.which;
     let b = null;
+
+
+
+
+
     if (kc == 37) {
+
+
         this.state.rendition.prev();
         b = this.qs(".app .bar button.prev");
-    } else if (kc == 39) {
+
+    } else {
+
+
         this.state.rendition.next();
         b = this.qs(".app .bar button.next");
+
+        
     }
+
+
+
+
+
+
+
+
+
     if (b) {
         b.style.transform = "scale(1.15)";
         window.setTimeout(() => b.style.transform = "", 150);
@@ -690,6 +711,8 @@ App.prototype.doFullscreen = () => {
 
     if (document.fullscreenEnabled) {
         requestFullscreen(document.documentElement);
+        let book = document.getElementById('app').style.border = "solid 0px"; //added by me, removes border for fullscreen
+        console.log('out of fullscre')
     }
 };
 
@@ -829,6 +852,13 @@ function onPlayerReady(event) {
     event.target.setVolume(50);
 }
 
+function changeVideo(videoId) {
+    //force the player to change the video
+    player.loadVideoById(videoId);
+    // player.playVideo();
+    //replay if necessary
+}
+
 
 // Welcome screen animation
 
@@ -845,3 +875,28 @@ $("#parent").click(function() {
         $("#parent").remove();
     })
 });
+
+$("#vidFireplace").click(function() {
+    changeVideo('IvJQTWGP5Fg') //thunder & rain, crackling fireplace
+});
+
+$("#vidJungle").click(function() {
+    changeVideo('xJsE3YUkHq8') //water, crickets, frogs
+});
+
+$("#vidTrain").click(function() {
+    changeVideo('0Yvdm_ZgEOY') //trains, rain
+});
+
+$("#vidSpa").click(function() {
+    changeVideo('FbxLnvWVSrk') //soothing water
+});
+
+$("#vidLibrary").click(function() {
+    changeVideo('7v6a1eT_DQs') //howling wind, thunder
+});
+
+// $("#myFullscreen").click(function() {
+//     console.log('clicked')
+//     $("#app").css('border', '0vw solid rgba(0, 0, 0, .3);')
+// })
